@@ -44,9 +44,18 @@ const login = catchAsync(async (req, res) => {
 
 const logout = catchAsync(async (req, res) => {
   const refreshToken = req.cookies.refreshToken || req.body.refreshToken;
+
   await authService.logout(refreshToken);
+
   clearTokenCookies(res);
-  res.status(httpStatus.NO_CONTENT).send();
+
+  res.status(httpStatus.OK).send(
+    new ApiResponse(
+      httpStatus.OK,
+      null,
+      'Logout successful'
+    )
+  );
 });
 
 const refreshTokens = catchAsync(async (req, res) => {
