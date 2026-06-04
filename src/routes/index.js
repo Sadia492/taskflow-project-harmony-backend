@@ -5,6 +5,10 @@ const projectRoute = require('./project.route');
 const taskRoute = require('./task.route');
 const activityRoute = require('./activity.route');
 const attachmentRoute = require('./attachment.route');
+const analyticsRoute = require('./analytics.route');
+const dashboardRoute = require('./dashboard.route');
+
+
 
 const router = express.Router();
 
@@ -32,6 +36,14 @@ const defaultRoutes = [
   {
     path: '/attachments',
     route: attachmentRoute,
+  },
+  {
+    path: '/analytics',
+    route: analyticsRoute,
+  },
+  {
+    path: '/dashboard',
+    route: dashboardRoute,
   },
 ];
 

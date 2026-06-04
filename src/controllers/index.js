@@ -4,3 +4,5 @@ module.exports.projectController = require('./project.controller');
 module.exports.taskController = require('./task.controller');
 module.exports.activityController = require('./activity.controller');
 module.exports.attachmentController = require('./attachment.controller');
+module.exports.analyticsController = require('./analytics.controller');
+module.exports.dashboardController = require('./dashboard.controller');

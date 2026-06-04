@@ -7,3 +7,5 @@ module.exports.activityService = require('./activity.service');
 module.exports.attachmentService = require('./attachment.service');
 module.exports.commentService = require('./comment.service');
 module.exports.notificationService = require('./notification.service');
+module.exports.analyticsService = require('./analytics.service');
+module.exports.dashboardService = require('./dashboard.service');
