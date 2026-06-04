@@ -1,6 +1,9 @@
 const httpStatus = require('http-status').default;
 const { Task, Project, User } = require('../models');
 const ApiError = require('../utils/ApiError');
+const Activity = require('../models/activity.model');
+
+
 
 const createTask = async (taskBody) => {
   const project = await Project.findById(taskBody.project);
@@ -27,8 +30,17 @@ const createTask = async (taskBody) => {
       'Please select a valid deadline'
     );
   }
+const task = await Task.create(taskBody);
 
-  return Task.create(taskBody);
+await Activity.create({
+  action: 'TASK_CREATED',
+  description: `Task "${task.title}" created`,
+  user: taskBody.createdBy,
+  project: task.project,
+  task: task._id,
+});
+
+return task;
 };
 
 
@@ -86,10 +98,27 @@ const updateTaskById = async (taskId, updateBody) => {
       );
     }
   }
+if (updateBody.status && updateBody.status !== task.status) {
+  await Activity.create({
+    action: 'TASK_STATUS_CHANGED',
+    description: `Task "${task.title}" moved to ${updateBody.status}`,
+    user: task.createdBy,
+    project: task.project,
+    task: task._id,
+  });
+}
+
 
   Object.assign(task, updateBody);
 
   await task.save();
+  await Activity.create({
+  action: 'TASK_UPDATED',
+  description: `Task "${task.title}" updated`,
+  user: task.createdBy,
+  project: task.project,
+  task: task._id,
+});
 
   return task;
 };
@@ -103,6 +132,14 @@ const deleteTaskById = async (taskId) => {
   }
 
   await task.deleteOne();
+
+  await Activity.create({
+  action: 'TASK_DELETED',
+  description: `Task "${task.title}" deleted`,
+  user: task.createdBy,
+  project: task.project,
+  task: task._id,
+});
 
   return task;
 };

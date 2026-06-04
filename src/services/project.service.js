@@ -1,10 +1,19 @@
 const httpStatus = require('http-status').default;
 const { Project, User } = require('../models');
 const ApiError = require('../utils/ApiError');
+const Activity = require('../models/activity.model');
 
 const createProject = async (projectBody) => {
-    console.log(projectBody, "from service")
-  return Project.create(projectBody);
+const project = await Project.create(projectBody);
+
+await Activity.create({
+  action: 'PROJECT_CREATED',
+  description: `Project "${project.name}" created`,
+  user: projectBody.createdBy,
+  project: project._id,
+});
+
+return project;
 };
 
 const queryProjects = async (filter) => {
@@ -29,6 +38,12 @@ const updateProjectById = async (projectId, updateBody) => {
   Object.assign(project, updateBody);
 
   await project.save();
+  await Activity.create({
+  action: 'PROJECT_UPDATED',
+  description: `Project "${project.name}" updated`,
+  user: project.createdBy,
+  project: project._id,
+});
 
   return project;
 };
@@ -41,6 +56,13 @@ const deleteProjectById = async (projectId) => {
   }
 
   await project.deleteOne();
+
+  await Activity.create({
+  action: 'PROJECT_DELETED',
+  description: `Project "${project.name}" deleted`,
+  user: project.createdBy,
+  project: project._id,
+});
 
   return project;
 };
@@ -69,6 +91,12 @@ const addMemberToProject = async (projectId, userId) => {
   project.members.push(userId);
 
   await project.save();
+  await Activity.create({
+  action: 'PROJECT_MEMBER_ADDED',
+  description: `User added to project "${project.name}"`,
+  user: userId,
+  project: project._id,
+});
 
   return project;
 };
@@ -85,6 +113,12 @@ const removeMemberFromProject = async (projectId, userId) => {
   );
 
   await project.save();
+  await Activity.create({
+  action: 'PROJECT_MEMBER_REMOVED',
+  description: `User removed from project "${project.name}"`,
+  user: userId,
+  project: project._id,
+});
 
   return project;
 };
