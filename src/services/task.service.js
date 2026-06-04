@@ -32,6 +32,12 @@ const createTask = async (taskBody) => {
   }
 const task = await Task.create(taskBody);
 
+await notificationService.createNotification({
+  user: task.assignedTo,
+  message: `New task assigned: "${task.title}"`,
+  type: 'TASK',
+});
+
 await Activity.create({
   action: 'TASK_CREATED',
   description: `Task "${task.title}" created`,
@@ -108,6 +114,20 @@ if (updateBody.status && updateBody.status !== task.status) {
   });
 }
 
+if (updateBody.status && updateBody.status !== task.status) {
+  await notificationService.createNotification({
+    user: task.createdBy,
+    message: `Task "${task.title}" moved to ${updateBody.status}`,
+    type: 'TASK',
+  });
+}
+if (updateBody.assignedTo && updateBody.assignedTo !== task.assignedTo.toString()) {
+  await notificationService.createNotification({
+    user: updateBody.assignedTo,
+    message: `You were assigned task "${task.title}"`,
+    type: 'TASK',
+  });
+}
 
   Object.assign(task, updateBody);
 
@@ -132,6 +152,12 @@ const deleteTaskById = async (taskId) => {
   }
 
   await task.deleteOne();
+
+  await notificationService.createNotification({
+    user: task.createdBy,
+    message: `Task "${task.title}" was deleted`,
+    type: 'TASK',
+  });
 
   await Activity.create({
   action: 'TASK_DELETED',

@@ -4,8 +4,10 @@ const createNotification = async (data) => {
   return Notification.create(data);
 };
 
-const getNotifications = async (userId) => {
-  return Notification.find({ user: userId }).sort({ createdAt: -1 });
+const getUserNotifications = async (userId) => {
+  return Notification.find({ user: userId })
+    .sort({ createdAt: -1 })
+    .limit(20);
 };
 
 const markAsRead = async (id) => {
@@ -14,6 +16,6 @@ const markAsRead = async (id) => {
 
 module.exports = {
   createNotification,
-  getNotifications,
+  getUserNotifications,
   markAsRead,
 };

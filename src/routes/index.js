@@ -4,6 +4,7 @@ const userRoute = require('./user.route');
 const projectRoute = require('./project.route');
 const taskRoute = require('./task.route');
 const activityRoute = require('./activity.route');
+const attachmentRoute = require('./attachment.route');
 
 const router = express.Router();
 
@@ -27,6 +28,10 @@ const defaultRoutes = [
   {
     path: '/activities',
     route: activityRoute,
+  },
+  {
+    path: '/attachments',
+    route: attachmentRoute,
   },
 ];
 

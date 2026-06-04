@@ -5,6 +5,11 @@ const Activity = require('../models/activity.model');
 
 const createProject = async (projectBody) => {
 const project = await Project.create(projectBody);
+await notificationService.createNotification({
+  user: projectBody.createdBy,
+  message: `Project "${project.name}" created successfully`,
+  type: 'PROJECT',
+});
 
 await Activity.create({
   action: 'PROJECT_CREATED',
@@ -38,6 +43,13 @@ const updateProjectById = async (projectId, updateBody) => {
   Object.assign(project, updateBody);
 
   await project.save();
+
+  await notificationService.createNotification({
+  user: project.createdBy,
+  message: `Project "${project.name}" was updated`,
+  type: 'PROJECT',
+});
+
   await Activity.create({
   action: 'PROJECT_UPDATED',
   description: `Project "${project.name}" updated`,
@@ -91,6 +103,13 @@ const addMemberToProject = async (projectId, userId) => {
   project.members.push(userId);
 
   await project.save();
+
+  await notificationService.createNotification({
+  user: userId,
+  message: `You were added to project "${project.name}"`,
+  type: 'PROJECT',
+});
+
   await Activity.create({
   action: 'PROJECT_MEMBER_ADDED',
   description: `User added to project "${project.name}"`,
@@ -113,6 +132,12 @@ const removeMemberFromProject = async (projectId, userId) => {
   );
 
   await project.save();
+
+  await notificationService.createNotification({
+  user: userId,
+  message: `You were removed from project "${project.name}"`,
+  type: 'PROJECT',
+});
   await Activity.create({
   action: 'PROJECT_MEMBER_REMOVED',
   description: `User removed from project "${project.name}"`,
