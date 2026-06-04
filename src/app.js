@@ -4,6 +4,7 @@ const cors = require('cors');
 const httpStatus = require('http-status').default;
 const config = require('./config/config');
 const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
 const routes = require('./routes');
 const { errorConverter, errorHandler } = require('./middleware/error');
 const ApiError = require('./utils/ApiError');
@@ -22,6 +23,9 @@ app.use(express.json());
 
 // parse urlencoded request body
 app.use(express.urlencoded({ extended: true }));
+
+// parse cookies
+app.use(cookieParser());
 
 // enable cors
 app.use(cors());

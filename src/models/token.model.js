@@ -27,9 +27,7 @@ const tokenSchema = mongoose.Schema(
       default: false,
     },
   },
-  {
-    timestamps: true,
-  }
+ { timestamps: true, versionKey: false }
 );
 
 /**

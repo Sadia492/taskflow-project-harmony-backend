@@ -7,12 +7,19 @@ const { roleRights } = require('../config/roles');
 
 const auth = (...requiredRights) => async (req, res, next) => {
   try {
+    let token;
     const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      token = authHeader.split(' ')[1];
+    } else if (req.cookies && req.cookies.accessToken) {
+      token = req.cookies.accessToken;
+    }
+
+    if (!token) {
       throw new ApiError(httpStatus.UNAUTHORIZED, 'Please authenticate');
     }
 
-    const token = authHeader.split(' ')[1];
     const payload = jwt.verify(token, config.jwt.secret);
     
     const user = await User.findById(payload.sub);
