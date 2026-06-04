@@ -36,11 +36,11 @@ const userSchema = mongoose.Schema(
       },
       private: true, // used by toJSON plugin if implemented
     },
-    role: {
-      type: String,
-      enum: roles,
-      default: 'user',
-    },
+   role: {
+  type: String,
+  enum: ['admin', 'projectManager', 'teamMember'],
+  default: 'teamMember',
+},
     isEmailVerified: {
       type: Boolean,
       default: false,
@@ -76,14 +76,13 @@ userSchema.methods.isPasswordMatch = async function (password) {
   return bcrypt.compare(password, user.password);
 };
 
-userSchema.pre('save', async function (next) {
+userSchema.pre('save', async function () {
   const user = this;
+
   if (user.isModified('password')) {
     user.password = await bcrypt.hash(user.password, 8);
   }
-  next();
 });
-
 /**
  * @typedef User
  */

@@ -4,9 +4,19 @@ const { authService, userService, tokenService } = require('../services');
 const ApiResponse = require('../utils/ApiResponse');
 
 const register = catchAsync(async (req, res) => {
+  console.log('BODY:', req.body);
+
   const user = await userService.createUser(req.body);
+
   const tokens = await tokenService.generateAuthTokens(user);
-  res.status(httpStatus.CREATED).send(new ApiResponse(httpStatus.CREATED, { user, tokens }, 'User registered successfully'));
+
+  res.status(httpStatus.CREATED).send(
+    new ApiResponse(
+      httpStatus.CREATED,
+      { user, tokens },
+      'User registered successfully'
+    )
+  );
 });
 
 const login = catchAsync(async (req, res) => {
