@@ -30,7 +30,7 @@ app.use(cookieParser());
 // enable cors
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: ['http://localhost:5173', 'https://taskflow-project-harmony.vercel.app'],	
     credentials: true,
   })
 );
