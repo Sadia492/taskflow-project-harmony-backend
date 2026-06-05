@@ -28,7 +28,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // enable cors
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+  })
+);
 
 // root route
 app.get('/', (req, res) => {

@@ -2,6 +2,9 @@ const httpStatus = require('http-status').default;
 const { Project, User } = require('../models');
 const ApiError = require('../utils/ApiError');
 const Activity = require('../models/activity.model');
+const notificationService = require('./notification.service');
+
+
 
 const createProject = async (projectBody) => {
 const project = await Project.create(projectBody);
