@@ -32,9 +32,7 @@ const errorHandler = (err, req, res, next) => {
     ...(config.env === 'development' && { stack: err.stack }),
   };
 
-  if (config.env === 'development') {
-    console.error(err);
-  }
+  console.error(err);
 
   res.status(statusCode).send(response);
 };
