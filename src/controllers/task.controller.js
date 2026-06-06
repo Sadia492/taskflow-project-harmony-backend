@@ -24,7 +24,7 @@ const createTask = catchAsync(async (req, res) => {
 
 
 const getTasks = catchAsync(async (req, res) => {
-  const tasks = await taskService.queryTasks(req.query);
+  const tasks = await taskService.queryTasks(req.user, req.query);
 
   res.send(
     new ApiResponse(

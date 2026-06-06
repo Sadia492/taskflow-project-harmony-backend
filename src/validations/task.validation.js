@@ -9,7 +9,7 @@ const createTask = {
     assignedTo: Joi.string().custom(objectId),
     dueDate: Joi.date().required(),
     priority: Joi.string().valid('high', 'medium', 'low'),
-    status: Joi.string().valid('todo', 'in_progress', 'completed'),
+    status: Joi.string().valid('todo', 'inProgress', 'completed'),
   }),
 };
 
@@ -25,7 +25,7 @@ const updateTask = {
       assignedTo: Joi.string().custom(objectId),
       dueDate: Joi.date(),
       priority: Joi.string().valid('high', 'medium', 'low'),
-      status: Joi.string().valid('todo', 'in_progress', 'completed'),
+      status: Joi.string().valid('todo', 'inProgress', 'completed'),
     })
     .min(1),
 };

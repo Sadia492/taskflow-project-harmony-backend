@@ -1,6 +1,6 @@
 const allRoles = {
-  teamMember: ['getProjects', 'getTasks', 'manageTasks', 'getActivities', 'getAnalytics', 'getDashboard'],
-  projectManager: ['getProjects', 'manageProjects', 'getTasks', 'manageTasks', 'getActivities', 'getAnalytics', 'getDashboard'],
+  teamMember: ['getUsers','getProjects', 'getTasks', 'manageTasks', 'getActivities', 'getAnalytics', 'getDashboard'],
+  projectManager: ['getUsers', 'getProjects', 'manageProjects', 'getTasks', 'manageTasks', 'getActivities', 'getAnalytics', 'getDashboard'],
   admin: ['getUsers', 'manageUsers', 'getProjects', 'manageProjects', 'getTasks', 'manageTasks', 'getActivities', 'getAnalytics', 'getDashboard'],
 };
 

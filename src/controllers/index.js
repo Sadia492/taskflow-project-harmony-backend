@@ -6,3 +6,5 @@ module.exports.activityController = require('./activity.controller');
 module.exports.attachmentController = require('./attachment.controller');
 module.exports.analyticsController = require('./analytics.controller');
 module.exports.dashboardController = require('./dashboard.controller');
+module.exports.commentController = require('./comment.controller');
+module.exports.notificationController = require('./notification.controller');

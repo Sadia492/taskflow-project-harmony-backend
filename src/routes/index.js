@@ -7,6 +7,8 @@ const activityRoute = require('./activity.route');
 const attachmentRoute = require('./attachment.route');
 const analyticsRoute = require('./analytics.route');
 const dashboardRoute = require('./dashboard.route');
+const commentRoute = require('./comment.route');
+const notificationRoute = require('./notification.route');
 
 
 
@@ -44,6 +46,14 @@ const defaultRoutes = [
   {
     path: '/dashboard',
     route: dashboardRoute,
+  },
+  {
+    path: '/comments',
+    route: commentRoute,
+  },
+  {
+    path: '/notifications',
+    route: notificationRoute,
   },
 ];
 

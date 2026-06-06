@@ -16,13 +16,13 @@ const createProject = catchAsync(async (req, res) => {
     .send(new ApiResponse(httpStatus.CREATED, project, 'Project created successfully'));
 });
 
-const getProjects = catchAsync(async (req, res) => {
-  const projects = await projectService.queryProjects(req.query);
+const getProjects = async (req, res) => {
+  const user = req.user;
 
-  res.send(
-    new ApiResponse(httpStatus.OK, projects, 'Projects retrieved successfully')
-  );
-});
+  const projects = await projectService.queryProjects(user);
+
+  res.json({ data: projects });
+};
 
 const getProject = catchAsync(async (req, res) => {
   const project = await projectService.getProjectById(req.params.projectId);

@@ -1,4 +1,5 @@
-const Comment = require('../models/comment.model');
+const { Comment, Activity } = require('../models');
+const notificationService = require('./notification.service');
 
 const addComment = async (data) => {
   const comment = await Comment.create(data);

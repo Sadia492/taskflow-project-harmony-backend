@@ -24,7 +24,28 @@ await Activity.create({
 return project;
 };
 
-const queryProjects = async (filter) => {
+const queryProjects = async (user) => {
+  let filter = {};
+
+  if (user.role === 'admin') {
+    filter = {};
+  }
+
+  if (user.role === 'projectManager') {
+    filter = {
+      $or: [
+        { createdBy: user.id },
+        { members: user.id }
+      ]
+    };
+  }
+
+  if (user.role === 'teamMember') {
+    filter = {
+      members: user.id
+    };
+  }
+
   return Project.find(filter)
     .populate('createdBy', 'name email')
     .populate('members', 'name email');

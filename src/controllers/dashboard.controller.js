@@ -4,19 +4,19 @@ const httpStatus = require('http-status').default;
 const dashboardService = require('../services/dashboard.service');
 
 const getStats = catchAsync(async (req, res) => {
-  const data = await dashboardService.getStats();
+  const data = await dashboardService.getStats(req.user);
 
   res.send(new ApiResponse(httpStatus.OK, data, 'Dashboard stats'));
 });
 
 const getWorkload = catchAsync(async (req, res) => {
-  const data = await dashboardService.getWorkload();
+  const data = await dashboardService.getWorkload(req.user);
 
   res.send(new ApiResponse(httpStatus.OK, data, 'Workload summary'));
 });
 
 const getProjectProgress = catchAsync(async (req, res) => {
-  const data = await dashboardService.getProjectProgress();
+  const data = await dashboardService.getProjectProgress(req.user);
 
   res.send(new ApiResponse(httpStatus.OK, data, 'Project progress'));
 });

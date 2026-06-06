@@ -36,11 +36,11 @@ const userSchema = mongoose.Schema(
       },
       private: true,
     },
-    role: {
-      type: String,
-      enum: roles,
-      default: 'teamMember',
-    },
+ role: {
+  type: String,
+  enum: ['admin', 'projectManager', 'teamMember'],
+  default: 'teamMember',
+},
     isEmailVerified: {
       type: Boolean,
       default: false,

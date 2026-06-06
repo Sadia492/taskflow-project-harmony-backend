@@ -33,5 +33,16 @@ router
     auth('manageProjects'),
     projectController.deleteProject
   );
+  router.post(
+  '/:projectId/members',
+  auth('manageProjects'),
+  validate(projectValidation.addMember),
+  projectController.addMember
+);
+router.delete(
+  '/:projectId/members/:userId',
+  auth('manageProjects'),
+  projectController.removeMember
+);
 
   module.exports = router;
